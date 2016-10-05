@@ -32,6 +32,16 @@ sampleProgram1: `
 	nor $t6 , $t0 , $t1 # ...1110000
 
 	halt
+
+# Expected register values after halt:
+#	$t0 = 13 
+#	$t1 = 11
+#	$t2 = 9
+#	$t3 = 8
+#	$t4 = 15
+#	$t5 = 15
+#	$t6 = -16
+
 `,
 
 sampleProgram2: `
@@ -81,6 +91,23 @@ sampleProgram2: `
 
 	halt
 
+# Expected register values after halt:
+#	$t0 = 1 
+#	$t1 = 2
+#	$t2 = 3
+#	$t3 = 4
+#	$t4 = 1
+#	$t5 = 2
+#	$t6 = 3
+#	$t7 = 4
+#	$s2 = 99
+#	$s3 = 99
+#	$sp = [4,3,,,....] (array value)
+#	arr1 = [1,2,3,4]
+#	arr2 = [1,2]
+#	val1 = 99
+#	val2 = 99
+
 `,
 
 sampleProgram3: `
@@ -99,18 +126,23 @@ sampleProgram3: `
 	bne $t0 , $zero , end
 
 	sumN:
-		addi $t1 , $t1 , 0
-		add $s1 , $s1 , $s0
+		addi $t1 , $t1 , 0 #$t1 = i
+		add $s1 , $s1 , $s0 #$s1 = sum
 		loop:
-			slt $t2 , $t1 , $s0
+			slt $t2 , $t1 , $s0 #i<N
 			beq $t2 , $zero , end
-			add $s1 , $s1 , $t1
-			addi $t1 , $t1 , 1
+			add $s1 , $s1 , $t1 #sum = sum + i
+			addi $t1 , $t1 , 1 #i = i + 1
 			j loop
 
 	end:
 		halt
 
+
+# Expected register values after halt:
+#	$t1 = 100
+#	$s0 = 100
+#	$s1 = 5050
 
 `,
 
